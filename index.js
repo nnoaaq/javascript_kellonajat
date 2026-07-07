@@ -7,11 +7,14 @@ const authClient = new google.auth.OAuth2(
   process.env.CLIENT_SECRET,
   process.env.REDIRECT_URI,
 );
+function time(year, month, day, hour, minute) {
+  return `${year}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}T${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}:00`;
+}
 app.get("/", (req, res) => {
   const authUrl = authClient.generateAuthUrl({
     scope: "https://www.googleapis.com/auth/calendar",
   });
-
+  console.log(time(2026, 7, 7, 9, 0));
   res.send(`<a href="${authUrl}">${authUrl}</a>`);
 });
 app.get("/auth/google-success", async (req, res) => {
@@ -27,11 +30,11 @@ app.get("/auth/google-success", async (req, res) => {
   const calendarEvent = {
     summary: "TESTI_testi",
     end: {
-      dateTime: dateObj.toISOString(),
+      dateTime: time(2026, 7, 7, 9, 0),
       timeZone: "Europe/Helsinki",
     },
     start: {
-      dateTime: dateObj.toISOString(),
+      dateTime: time(2026, 7, 7, 8, 0),
       timeZone: "Europe/Helsinki",
     },
   };
